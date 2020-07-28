@@ -28,6 +28,8 @@ dependencies {
     testCompile 'io.cucumber:cucumber-junit:4.7.2'
 
     testImplementation('io.qameta.allure:allure-cucumber4-jvm:2.13.5')
+
+    compile 'com.codeborne:selenide:5.5.0'
 }
 
 application {

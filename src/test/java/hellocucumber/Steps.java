@@ -3,6 +3,7 @@ package hellocucumber;
 import io.cucumber.java.ru.Дано;
 import io.cucumber.java.ru.Когда;
 import io.cucumber.java.ru.Тогда;
+import utils.LkUtils;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -24,4 +25,8 @@ public class Steps {
         assertTrue(true);
     }
 
+    @Дано("открыта страница авторизации")
+    public void открытаСтраницаАвторизации() {
+        LkUtils.openMain();
+    }
 }
