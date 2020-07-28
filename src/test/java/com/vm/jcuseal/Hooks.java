@@ -1,4 +1,4 @@
-package steps;
+package com.vm.jcuseal;
 
 import io.cucumber.java.Before;
 
@@ -8,6 +8,6 @@ public class Hooks {
 
     @Before
     public void openUrl() {
-        open("http://192.168.128.234/admin");
+//        open("http://192.168.128.234/admin");
     }
 }

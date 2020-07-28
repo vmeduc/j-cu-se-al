@@ -48,7 +48,7 @@ task cucumber() {
             classpath = configurations.cucumberRuntime + sourceSets.main.output + sourceSets.test.output
             args = [
                     '--plugin', 'pretty', '--plugin', 'io.qameta.allure.cucumber4jvm.AllureCucumber4Jvm',
-                    '--glue', 'hellocucumber', 'src/test/resources'
+                    '--glue', 'com.vm.jcuseal', 'src/test/resources/features'
             ]
         }
     }
