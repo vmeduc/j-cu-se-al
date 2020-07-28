@@ -4,10 +4,10 @@ plugins {
     id "io.qameta.allure" version "2.3"
 }
 
-//allure {
-//    version = '2.3'
-//    autoconfigure = true
-//}
+allure {
+    version = '2.3'
+    autoconfigure = true
+}
 
 repositories {
     mavenCentral()
@@ -24,10 +24,10 @@ dependencies {
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.6.2'
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.6.2'
 
-    testCompile 'io.cucumber:cucumber-java:6.2.2'
-    testCompile 'io.cucumber:cucumber-junit:6.2.2'
+    testCompile 'io.cucumber:cucumber-java:4.7.2'
+    testCompile 'io.cucumber:cucumber-junit:4.7.2'
 
-    testImplementation('io.qameta.allure:allure-cucumber4-jvm:2.13.0')
+    testImplementation('io.qameta.allure:allure-cucumber4-jvm:2.13.5')
 }
 
 application {
@@ -44,7 +44,10 @@ task cucumber() {
         javaexec() {
             main = "io.cucumber.core.cli.Main"
             classpath = configurations.cucumberRuntime + sourceSets.main.output + sourceSets.test.output
-            args = ['--plugin', 'pretty', '--glue', 'hellocucumber', 'src/test/resources']
+            args = [
+                    '--plugin', 'pretty', '--plugin', 'io.qameta.allure.cucumber4jvm.AllureCucumber4Jvm',
+                    '--glue', 'hellocucumber', 'src/test/resources'
+            ]
         }
     }
 }

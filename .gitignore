@@ -4,9 +4,7 @@
 # Ignore Gradle build output directory
 build
 
-bin
-.settings
-.classpath
-.gitattributes
 .project
 .idea
+
+.allure
