@@ -1,30 +1,31 @@
 package com.vm.jcuseal;
 
-import io.cucumber.java.ru.*;
-import org.openqa.selenium.*;
-import com.vm.jcuseal.utils.LkUtils;
+import io.cucumber.java.ru.Дано;
+import io.cucumber.java.ru.И;
+import io.cucumber.java.ru.Когда;
+import org.openqa.selenium.By;
 
 import static com.codeborne.selenide.Selenide.$;
 
 public class Steps {
 
-    @Дано("открыта страница авторизации")
-    public void открытаСтраницаАвторизации() {
-        LkUtils.openMain();
+    @Дано("открыта главная страница Яндекс")
+    public void открытаСтраницаЯндекс() {
+        CucumberTest.openMain();
     }
 
-    @Когда("пользователь вводит логин {string}")
-    public void пользовательВводитЛогин(String login) {
-        $(By.id("username")).setValue(login);
+    @Когда("пользователь вводит запрос {string}")
+    public void пользовательВводитЗапрос(String query) {
+        $(By.id("text")).setValue(query);
     }
 
-    @И("пользователь вводит пароль {string}")
-    public void пользовательВводитПароль(String password) {
-        $(By.id("password")).setValue(password);
+    @И("пользователь нажимает Найти")
+    public void пользовательНажимает() {
+        $(By.xpath("//button[1]")).click();
     }
 
-    @И("пользователь нажимает {string}")
-    public void пользовательНажимает(String text) {
-        $(By.xpath("//button[text()='" + text + "']")).click();
+    @И("пользователь плохо нажимает Найти")
+    public void пользовательПлохоНажимаетНайти() {
+        $(By.xpath("//button[0]")).click();
     }
 }

@@ -32,10 +32,10 @@ dependencies {
 
     compile 'com.codeborne:selenide:5.3.1'
 
-
     compile 'io.github.bonigarcia:webdrivermanager:3.7.1'
     testRuntimeOnly 'org.slf4j:slf4j-simple:1.7.26'
 
+    compile 'org.testng:testng:7.0.0'
 }
 
 application {
