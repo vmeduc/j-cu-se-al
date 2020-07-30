@@ -42,9 +42,9 @@ application {
     mainClassName = 'com.vm.jcuseal.App'
 }
 
-test {
-    useJUnitPlatform()
-}
+//test {
+//    useJUnitPlatform()
+//}
 
 task cucumber() {
     dependsOn assemble, compileTestJava

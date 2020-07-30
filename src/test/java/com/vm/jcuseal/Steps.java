@@ -1,5 +1,6 @@
 package com.vm.jcuseal;
 
+import com.vm.jcuseal.CucumberTest;
 import io.cucumber.java.ru.Дано;
 import io.cucumber.java.ru.И;
 import io.cucumber.java.ru.Когда;

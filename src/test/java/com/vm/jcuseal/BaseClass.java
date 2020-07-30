@@ -1,4 +1,4 @@
-package com.vm.jcuseal.utils;
+package com.vm.jcuseal;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.WebDriver;

@@ -1,19 +1,18 @@
 package com.vm.jcuseal;
 
-import com.vm.jcuseal.utils.BaseClass;
+import com.vm.jcuseal.BaseClass;
 import io.cucumber.java.After;
 import io.cucumber.java.Before;
 import io.cucumber.junit.Cucumber;
 import io.cucumber.junit.CucumberOptions;
 import org.junit.runner.RunWith;
 import org.openqa.selenium.WebDriver;
-import org.testng.annotations.Listeners;
 
 import static com.codeborne.selenide.Selenide.open;
 
 @RunWith(Cucumber.class)
-@CucumberOptions(plugin = "pretty", glue = "com.vm.jcuseal", features = "src/test/resources/features")
-@Listeners({AllureListener.class})
+@CucumberOptions(features = "src/test/resources/features", glue = {"com/vm/jcuseal"})
+//@Listeners({AllureListener.class})
 public class CucumberTest extends BaseClass {
 
     private WebDriver driver;
@@ -22,8 +21,6 @@ public class CucumberTest extends BaseClass {
     public void setUp() {
         BaseClass baseClass = new BaseClass();
         driver = baseClass.initialize_driver();
-
-        driver.get("https://demo.nopcommerce.com/");
     }
 
     @After
