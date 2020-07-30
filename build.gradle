@@ -1,8 +1,11 @@
 plugins {
     id 'java'
-    id 'application'
-    id "io.qameta.allure" version "2.3"
+//    id "io.qameta.allure" version "2.3"
 }
+
+wrapper.gradleVersion = '6.5.1'
+def cucumberVersion = '6.2.2'
+def junitVersion = '5.6.2'
 
 //allure {
 //    version = '2.3'
@@ -11,40 +14,39 @@ plugins {
 
 repositories {
     mavenCentral()
+    jcenter()
 }
 
-configurations {
-    cucumberRuntime {
-        extendsFrom testImplementation
-    }
-}
+//configurations {
+//    cucumberRuntime {
+//        extendsFrom testImplementation
+//    }
+//}
 
 dependencies {
-    implementation 'com.google.guava:guava:29.0-jre'
-    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.6.2'
-    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.6.2'
+//    testImplementation "org.junit.jupiter:junit-jupiter-api:${junitVersion}"
+//    testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:${junitVersion}"
+//    testRuntimeOnly "org.junit.vintage:junit-vintage-engine:${junitVersion}"
 
-    testCompile 'io.cucumber:cucumber-java:6.2.2'
-    testCompile 'io.cucumber:cucumber-junit:6.2.2'
+    testImplementation "io.cucumber:cucumber-java:${cucumberVersion}"
+    testImplementation "io.cucumber:cucumber-junit:${cucumberVersion}"
 
-    testImplementation('io.qameta.allure:allure-cucumber4-jvm:2.13.0')
-}
 
-application {
-    mainClassName = 'com.vm.jcuseal.App'
+
+//    implementation 'io.qameta.allure:allure-cucumber4-jvm:2.13.0'
 }
 
 test {
     useJUnitPlatform()
 }
 
-task cucumber() {
-    dependsOn assemble, compileTestJava
-    doLast() {
-        javaexec() {
-            main = "io.cucumber.core.cli.Main"
-            classpath = configurations.cucumberRuntime + sourceSets.main.output + sourceSets.test.output
-            args = ['--plugin', 'pretty', '--glue', 'hellocucumber', 'src/test/resources']
-        }
-    }
-}
+//task cucumber() {
+//    dependsOn assemble, compileTestJava
+//    doLast() {
+//        javaexec() {
+//            main = "io.cucumber.core.cli.Main"
+//            classpath = configurations.cucumberRuntime + sourceSets.main.output + sourceSets.test.output
+//            args = ['--plugin', 'pretty', '--glue', 'com.vm.jcuseal', 'src/test/resources/features']
+//        }
+//    }
+//}

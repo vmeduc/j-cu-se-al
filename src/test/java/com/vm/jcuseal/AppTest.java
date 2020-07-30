@@ -1,19 +1,16 @@
-
 package com.vm.jcuseal;
 
-import org.junit.jupiter.api.Test;
-import static org.junit.jupiter.api.Assertions.*;
+import io.cucumber.junit.Cucumber;
+import io.cucumber.junit.CucumberOptions;
+import org.junit.runner.RunWith;
 
+@RunWith(Cucumber.class)
+@CucumberOptions()
 class AppTest {
-    
-    @Test 
-    void appHasAGreeting() {
-        App classUnderTest = new App();
-        assertNotNull(classUnderTest.getGreeting(), "app should have a greeting");
-    }
 
-    @Test
-    void Temp() {
-        assertTrue(true);
-    }
+//    @Test
+//    public void dummyTest(){
+//        System.out.println("Dummy test");
+//    }
+
 }
