@@ -1,27 +1,27 @@
 package com.vm.jcuseal;
 
 import com.codeborne.selenide.WebDriverRunner;
+import com.codeborne.selenide.logevents.SelenideLogger;
 import io.cucumber.java.After;
 import io.cucumber.java.Before;
-import io.cucumber.java.BeforeStep;
 import io.cucumber.java.ru.Дано;
 import io.cucumber.java.ru.И;
 import io.cucumber.java.ru.Когда;
 import io.cucumber.java.ru.Тогда;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import io.qameta.allure.Allure;
+import io.qameta.allure.selenide.AllureSelenide;
 import org.junit.Assert;
 import org.openqa.selenium.By;
+import org.openqa.selenium.OutputType;
+import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
+import java.io.ByteArrayInputStream;
 
-import static com.codeborne.selenide.Selenide.*;
+import static com.codeborne.selenide.Selenide.$;
+import static com.codeborne.selenide.Selenide.open;
 
 public class Steps {
 
@@ -35,17 +35,13 @@ public class Steps {
 
         WebDriverRunner.setWebDriver(driver);
 
-        System.out.println("Before");
-    }
-
-    @BeforeStep
-    public void setupTest() {
-
-        System.out.println("Before step");
+        SelenideLogger.addListener(
+                "AllureSelenide", new AllureSelenide().screenshots(true).savePageSource(false)
+        );
     }
 
     @After
-    public void teardown() {
+    public void tearDown() {
         if (driver != null) {
             driver.quit();
         }
@@ -63,26 +59,29 @@ public class Steps {
 
     @И("нажимает Найти")
     public void нажимаетНайти() {
-        $(By.xpath("//button")).click();
+        $(By.xpath("//button lol")).click();
     }
 
     @Тогда("на странице есть {string}")
     public void наСтраницеЕсть(String text) {
-        boolean exists = $(By.xpath("//b[contains(text(),'cucumber.io')]")).exists();
+        boolean exists = $(By.xpath("//b[contains(text(),'" + text + "')]")).exists();
         Assert.assertTrue("огурцов нет", exists);
     }
 
     @Тогда("происходит скриншот")
     public void происходитСкриншот() {
-        String path = screenshot("myScreen");
-        Allure.addAttachment("myScreen", path);
+//        String path = screenshot("myScreen");
+//        Allure.addAttachment("myScreen", path);
 
-        Path content = Paths.get(path);
-        try (InputStream is = Files.newInputStream(content)) {
-            Allure.addAttachment("My attachment", is);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+//        Path content = Paths.get(path);
+//        try (InputStream is = Files.newInputStream(content)) {
+//            Allure.addAttachment("My attachment", is);
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+
+        byte[] screenshot = ((TakesScreenshot) driver).getScreenshotAs(OutputType.BYTES);
+        Allure.addAttachment("Screen attachment", new ByteArrayInputStream(screenshot));
 
     }
 }
