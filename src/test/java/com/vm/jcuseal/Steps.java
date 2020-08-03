@@ -9,14 +9,19 @@ import io.cucumber.java.ru.И;
 import io.cucumber.java.ru.Когда;
 import io.cucumber.java.ru.Тогда;
 import io.github.bonigarcia.wdm.WebDriverManager;
+import io.qameta.allure.Allure;
 import org.junit.Assert;
 import org.openqa.selenium.By;
-import org.openqa.selenium.Dimension;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 
-import static com.codeborne.selenide.Selenide.$;
-import static com.codeborne.selenide.Selenide.open;
+import java.io.IOException;
+import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+
+import static com.codeborne.selenide.Selenide.*;
 
 public class Steps {
 
@@ -27,7 +32,6 @@ public class Steps {
         WebDriverManager.firefoxdriver().setup();
         driver = new FirefoxDriver();
         driver.manage().window().maximize();
-        driver.manage().window().setSize(new Dimension(500, 500));
 
         WebDriverRunner.setWebDriver(driver);
 
@@ -66,5 +70,19 @@ public class Steps {
     public void наСтраницеЕсть(String text) {
         boolean exists = $(By.xpath("//b[contains(text(),'cucumber.io')]")).exists();
         Assert.assertTrue("огурцов нет", exists);
+    }
+
+    @Тогда("происходит скриншот")
+    public void происходитСкриншот() {
+        String path = screenshot("myScreen");
+        Allure.addAttachment("myScreen", path);
+
+        Path content = Paths.get(path);
+        try (InputStream is = Files.newInputStream(content)) {
+            Allure.addAttachment("My attachment", is);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
     }
 }

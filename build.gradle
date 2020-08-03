@@ -1,26 +1,26 @@
 plugins {
     id 'java'
-//    id "io.qameta.allure" version "2.3"
+    id "io.qameta.allure" version "2.3"
 }
 
 wrapper.gradleVersion = '6.5.1'
 def cucumberVersion = '6.2.2'
 
-//allure {
-//    version = '2.3'
-//    autoconfigure = true
-//}
+allure {
+    version = '2.3'
+    autoconfigure = true
+}
 
 repositories {
     mavenCentral()
     jcenter()
 }
 
-//configurations {
-//    cucumberRuntime {
-//        extendsFrom testImplementation
-//    }
-//}
+configurations {
+    cucumberRuntime {
+        extendsFrom testImplementation
+    }
+}
 
 dependencies {
 //    testImplementation "org.junit.jupiter:junit-jupiter-api:${junitVersion}"
@@ -33,20 +33,22 @@ dependencies {
     compile "com.codeborne:selenide:5.13.0"
     testCompile "io.github.bonigarcia:webdrivermanager:4.1.0"
 
-//    implementation 'io.qameta.allure:allure-cucumber4-jvm:2.13.0'
+    compile 'io.qameta.allure:allure-cucumber4-jvm:2.13.5'
+//    compile "io.qameta.allure:allure-gradle:2.5"
 }
 
 test {
     useJUnitPlatform()
 }
 
-//task cucumber() {
-//    dependsOn assemble, compileTestJava
-//    doLast() {
-//        javaexec() {
-//            main = "io.cucumber.core.cli.Main"
-//            classpath = configurations.cucumberRuntime + sourceSets.main.output + sourceSets.test.output
-//            args = ['--plugin', 'pretty', '--glue', 'com.vm.jcuseal', 'src/test/resources/features']
-//        }
-//    }
-//}
+task cucumber() {
+    dependsOn assemble, compileTestJava
+    doLast() {
+        javaexec() {
+            main = "io.cucumber.core.cli.Main"
+            classpath = configurations.cucumberRuntime + sourceSets.main.output + sourceSets.test.output
+            args = ['--plugin', 'pretty', '--plugin', 'io.qameta.allure.cucumber4jvm.AllureCucumber4Jvm',
+                    '--glue', 'com.vm.jcuseal', 'src/test/resources/features']
+        }
+    }
+}
