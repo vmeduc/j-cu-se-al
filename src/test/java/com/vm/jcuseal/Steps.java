@@ -10,12 +10,14 @@ import io.cucumber.java.ru.Когда;
 import io.cucumber.java.ru.Тогда;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import io.qameta.allure.Allure;
+import io.qameta.allure.Link;
 import io.qameta.allure.selenide.AllureSelenide;
 import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 
 import java.io.ByteArrayInputStream;
@@ -29,14 +31,16 @@ public class Steps {
 
     @Before
     public void setupClass() {
-        WebDriverManager.firefoxdriver().setup();
-        driver = new FirefoxDriver();
+        WebDriverManager.chromedriver().setup();
+        driver = new ChromeDriver();
         driver.manage().window().maximize();
 
         WebDriverRunner.setWebDriver(driver);
 
-        SelenideLogger.addListener(
-                "AllureSelenide", new AllureSelenide().screenshots(true).savePageSource(false)
+        SelenideLogger.addListener("AllureSelenide",
+                new AllureSelenide()
+                        .screenshots(true)
+                        .savePageSource(false)
         );
     }
 
@@ -59,7 +63,7 @@ public class Steps {
 
     @И("нажимает Найти")
     public void нажимаетНайти() {
-        $(By.xpath("//button lol")).click();
+        $(By.xpath("//button")).click();
     }
 
     @Тогда("на странице есть {string}")
@@ -70,18 +74,13 @@ public class Steps {
 
     @Тогда("происходит скриншот")
     public void происходитСкриншот() {
-//        String path = screenshot("myScreen");
-//        Allure.addAttachment("myScreen", path);
-
-//        Path content = Paths.get(path);
-//        try (InputStream is = Files.newInputStream(content)) {
-//            Allure.addAttachment("My attachment", is);
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-
         byte[] screenshot = ((TakesScreenshot) driver).getScreenshotAs(OutputType.BYTES);
         Allure.addAttachment("Screen attachment", new ByteArrayInputStream(screenshot));
-
     }
+
+    @И("происходит прикрепление ссылки")
+    @Link(name = "myLink", url = "https://github.com/vmeduc")
+    public void происходитПрикреплениеСсылки() {
+    }
+
 }
