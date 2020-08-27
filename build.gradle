@@ -43,3 +43,17 @@ task cucumber() {
         }
     }
 }
+
+task debug() {
+    dependsOn assemble, compileTestJava
+    doLast() {
+        javaexec() {
+            main = "io.cucumber.core.cli.Main"
+            classpath = configurations.cucumberRuntime + sourceSets.main.output + sourceSets.test.output
+            args = [
+                    '--plugin', 'pretty', '--plugin', 'io.qameta.allure.cucumber4jvm.AllureCucumber4Jvm',
+                    '--glue', 'com.vm.jcuseal', 'src/test/resources/debugFeatures/debug.feature'
+            ]
+        }
+    }
+}
